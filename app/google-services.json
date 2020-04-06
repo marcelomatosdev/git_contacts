@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "79750923052",
+    "firebase_url": "https://redriverbay-b2947.firebaseio.com",
+    "project_id": "redriverbay-b2947",
+    "storage_bucket": "redriverbay-b2947.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79750923052:android:a9004f07c9eb2329b4e289",
+        "android_client_info": {
+          "package_name": "com.example.redriverbay_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79750923052-lgcc8ildikb9910pffjr93umefflieih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBbKeENBpndjzzwDX2h4Yzwg407jvN29Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79750923052-lgcc8ildikb9910pffjr93umefflieih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

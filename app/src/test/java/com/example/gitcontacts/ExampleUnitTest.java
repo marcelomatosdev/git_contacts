@@ -1,4 +1,4 @@
-package com.example.redriverbay_android;
+package com.example.gitcontacts;
 
 import org.junit.Test;
 

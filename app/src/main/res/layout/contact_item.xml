@@ -19,20 +19,45 @@
             android:src="@mipmap/ic_launcher"/>
 
         <TextView
-            android:id="@+id/text_view_creator"
+            android:id="@+id/text_view_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Creator Name"
+            android:text="Username"
             android:textColor="@android:color/black"
             android:textSize="20sp"
+            android:layout_gravity="center"
             />
 
         <TextView
-            android:id="@+id/text_view_likes"
+            android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Like:"
+            android:text="Name: "
             />
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="47dp"
+            android:src="@mipmap/ic_github_round"
+
+            />
+        <TextView
+            android:id="@+id/text_view_public_repos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repositories: "
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/text_view_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Followers: "
+            android:visibility="gone"
+            />
+
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
