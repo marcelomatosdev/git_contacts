@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.MessageQueue;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,7 +14,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.events.EventHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.BlockingDeque;
 
 
 public class AddContactActivity extends AppCompatActivity {
@@ -21,12 +36,15 @@ public class AddContactActivity extends AppCompatActivity {
     private ImageButton btnSearch;
     private EditText etSearch;
     private Button btnAddNewContact;
+    private String username;
+    private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
+        username = "";
         wbAddContact = findViewById(R.id.wbAddContact);
         wbAddContact.setWebViewClient(new WebViewClient());
 
@@ -41,24 +59,64 @@ public class AddContactActivity extends AppCompatActivity {
         EventHandler eventHandler = new EventHandler();
 
         btnSearch.setOnClickListener(eventHandler);
+        btnAddNewContact.setOnClickListener(eventHandler);
 
     }
 
 
-    class EventHandler implements View.OnClickListener{
+    class EventHandler implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btnSearch:
-                    String username = etSearch.getText().toString();
-                    wbAddContact.loadUrl("https://github.com/"+username);
-                    etSearch.clearFocus();
-                    btnAddNewContact.setVisibility(View.VISIBLE);
+                    username = etSearch.getText().toString();
+                    if (username != "") {
+                        wbAddContact.loadUrl("https://github.com/" + username);
+                        etSearch.clearFocus();
+                        btnAddNewContact.setVisibility(View.VISIBLE);
+                    }
                     break;
+                case R.id.btnAddNewContact:
+                    if (username != "") {
+                        addContact(username);
 
+                    }
+                    break;
             }
         }
     }
 
+    public void addContact(String username){
+        String mUsername = username;
+        mRequestQueue = Volley.newRequestQueue(this);
+        parseJSON(mUsername);
 
+    }
+
+    private void parseJSON(String username) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("username",username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = "https://my-git-network.herokuapp.com/gitfriends";
+        Log.d("Marcelo", "parseJSON:2 "+object);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Intent intentMain = new Intent(AddContactActivity.this, MainActivity.class);
+                startActivity(intentMain);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Intent intentMain = new Intent(AddContactActivity.this, MainActivity.class);
+                startActivity(intentMain);
+                error.printStackTrace();
+            }
+        });
+        mRequestQueue.add(request);
+    }
 }

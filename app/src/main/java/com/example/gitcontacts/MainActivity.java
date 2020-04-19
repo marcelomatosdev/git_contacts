@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
     public static final String EXTRA_REPOSITORIES = "repositories";
     public static final String EXTRA_FOLLOWERS = "followers";
     public static final String EXTRA_ID = "id";
+    public static final String EXTRA_GIT_ID = "git_id";
 
     private Toolbar toolbar;
 
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
     private void parseJSON() {
 
         String url = "https://my-git-network.herokuapp.com/contacts";
-        Log.d("Marcelo", "onResponse: ");
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,url,null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
                                 JSONObject contact = response.getJSONObject(i);
 
                                 int id = contact.getInt("id");
+                                int git_id = contact.getInt("git_id");
                                 String imageUrl = contact.getString("avatar_url");
                                 String username = contact.getString("login");
                                 String name = contact.getString("name");
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
                                 //int followers = contact.getInt("followers");
                                 int repositories = 10;
                                 int followers = 20;
-                                mContactList.add(new ContactItem(imageUrl, username,name,bio,repositories,followers, id));
+                                mContactList.add(new ContactItem(imageUrl, username,name,bio,repositories,followers, id, git_id));
                             }
                             mContactCardAdapter = new ContactCardAdapter(MainActivity.this, mContactList);
                             mRecyclerView.setAdapter(mContactCardAdapter);
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
         detailIntent.putExtra(EXTRA_REPOSITORIES, clickedItem.getRepositories());
         detailIntent.putExtra(EXTRA_FOLLOWERS, clickedItem.getFollowers());
         detailIntent.putExtra(EXTRA_ID,clickedItem.getId());
+        detailIntent.putExtra(EXTRA_GIT_ID,clickedItem.getGitId());
         startActivity(detailIntent);
     }
 }

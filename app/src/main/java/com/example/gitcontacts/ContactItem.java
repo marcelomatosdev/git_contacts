@@ -8,9 +8,10 @@ public class ContactItem {
     private int mRepositories;
     private int mFollowers;
     private int mId;
+    private int mGitId;
 
 
-    public ContactItem(String imageUrl, String userName, String name, String bio, int repositories, int followers, int id ){
+    public ContactItem(String imageUrl, String userName, String name, String bio, int repositories, int followers, int id, int gitId ){
         mImageUrl = imageUrl;
         mUsername = userName;
         mName = name;
@@ -18,6 +19,7 @@ public class ContactItem {
         mRepositories = repositories;
         mFollowers = followers;
         mId = id;
+        mGitId = gitId;
     }
 
     public String getImageUrl() {
@@ -39,5 +41,6 @@ public class ContactItem {
         return mFollowers;
     }
     public int getId() { return mId;   }
+    public int getGitId() { return mGitId;   }
 
 }

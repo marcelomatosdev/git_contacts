@@ -30,19 +30,19 @@ import static com.example.gitcontacts.MainActivity.EXTRA_NAME;
 import static com.example.gitcontacts.MainActivity.EXTRA_REPOSITORIES;
 import static com.example.gitcontacts.MainActivity.EXTRA_USERNAME;
 import static com.example.gitcontacts.MainActivity.EXTRA_ID;
+import static com.example.gitcontacts.MainActivity.EXTRA_GIT_ID;
 
 public class DetailContactActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     public int id;
+    public int gitId;
     private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
-
-
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL);
@@ -51,7 +51,7 @@ public class DetailContactActivity extends AppCompatActivity {
         String bio = intent.getStringExtra(EXTRA_BIO);
         int repositories = intent.getIntExtra(EXTRA_REPOSITORIES, 0);
         int followers = intent.getIntExtra(EXTRA_FOLLOWERS, 0);
-
+        gitId = intent.getIntExtra(EXTRA_GIT_ID, 0);
         id = intent.getIntExtra(EXTRA_ID, 0);
 
         toolbar = findViewById(R.id.DetailContactMenu);
@@ -79,48 +79,33 @@ public class DetailContactActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.delete:
-                Log.d("Marcelo", "onOptionsItemSelected: ");
-                Log.d("Marcelo", ""+id);
-                removeContact(id);
-
-//                Intent intentRefresh = new Intent(RssFeed.this, RssFeed.class);
-//                intentRefresh.putExtra("url", selectedURL);
-//                finish();
-//                startActivity(intentRefresh);
+                Log.d("Marcelo", "onOptionsItemSelected: "+gitId);
+                removeContact(gitId);
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     public void removeContact(int selectedId){
-        int mId = selectedId;
-
-
+        int mGitId = selectedId;
         mRequestQueue = Volley.newRequestQueue(this);
-        parseJSON(mId);
-
+        parseJSON(mGitId);
     }
 
-    private void parseJSON(int mId) {
-
-        String url = "https://my-git-network.herokuapp.com/contacts/"+mId;
-        Log.d("Marcelo", "Delete");
-        Log.d("Marcelo", url);
+    private void parseJSON(int mGitId) {
+        String url = "https://my-git-network.herokuapp.com/gitfriends/"+mGitId;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.DELETE,url,null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 Intent intentMain = new Intent(DetailContactActivity.this, MainActivity.class);
                 startActivity(intentMain);
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Intent intentMain = new Intent(DetailContactActivity.this, MainActivity.class);
+                startActivity(intentMain);
                 error.printStackTrace();
             }
         });
