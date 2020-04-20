@@ -6,10 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -17,6 +24,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.OAuthProvider;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GitLoginActivity extends AppCompatActivity {
 
@@ -26,6 +36,7 @@ public class GitLoginActivity extends AppCompatActivity {
     public String current_username;
     private ImageView imgLogin;
     private ImageView imgGitContactsLogo;
+    private RequestQueue mRequestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,8 @@ public class GitLoginActivity extends AppCompatActivity {
         }
     }
 
+
+
     public void login()
     {
         //Github login auth
@@ -65,7 +78,7 @@ public class GitLoginActivity extends AppCompatActivity {
 
         OAuthProvider.Builder provider = OAuthProvider.newBuilder("github.com");
 
-        Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
+        final Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
         if (pendingResultTask != null) {
             // There's something already here! Finish the sign-in for your user.
             pendingResultTask
@@ -73,13 +86,13 @@ public class GitLoginActivity extends AppCompatActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    // User is signed in.
-                                    // IdP data available in
-                                    // authResult.getAdditionalUserInfo().getProfile().
-                                    // The OAuth access token can also be retrieved:
-                                    // authResult.getCredential().getAccessToken().
+
                                     current_user = authResult.getUser().getDisplayName();
                                     current_username = authResult.getAdditionalUserInfo().getUsername();
+
+                                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    parseJSON(current_username);
+
                                     Intent intentMain = new Intent(GitLoginActivity.this, MainActivity.class);
                                     intentMain.putExtra("name", current_user);
                                     intentMain.putExtra("username", current_username);
@@ -101,13 +114,13 @@ public class GitLoginActivity extends AppCompatActivity {
                             new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    // User is signed in.
-                                    // IdP data available in
-                                    // authResult.getAdditionalUserInfo().getProfile().
-                                    // The OAuth access token can also be retrieved:
-                                    // authResult.getCredential().getAccessToken().
+
                                     current_user = authResult.getUser().getDisplayName();
                                     current_username = authResult.getAdditionalUserInfo().getUsername();
+
+                                    mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    parseJSON(current_username);
+
                                     Intent intentMain = new Intent(GitLoginActivity.this, MainActivity.class);
                                     intentMain.putExtra("name", current_user);
                                     intentMain.putExtra("username", current_username);
@@ -123,6 +136,36 @@ public class GitLoginActivity extends AppCompatActivity {
                             });
         }
         //Login Github auth - END
+    }
+    private void parseJSON(String current_username) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("username",current_username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = "https://my-git-network.herokuapp.com/users";
+        //String url = "http://localhost:3000/users";
+
+        Log.d("Marcelo", "username "+object);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("Marcelo", "suc");
+                Intent intentMain = new Intent(GitLoginActivity.this, MainActivity.class);
+               startActivity(intentMain);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Marcelo", "err");
+                Intent intentMain = new Intent(GitLoginActivity.this, MainActivity.class);
+                startActivity(intentMain);
+                error.printStackTrace();
+            }
+        });
+        mRequestQueue.add(request);
     }
 
 }

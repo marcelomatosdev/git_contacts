@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
         }
         getSupportActionBar().setTitle("Welcome " + showWelcome);
 
+        mRequestQueue = Volley.newRequestQueue(this);
+        parseJSON();
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -96,8 +98,7 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
 
         mContactList = new ArrayList<>();
 
-        mRequestQueue = Volley.newRequestQueue(this);
-        parseJSON();
+
 
     }
     @Override
