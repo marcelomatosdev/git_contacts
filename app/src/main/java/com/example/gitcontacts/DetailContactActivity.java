@@ -56,7 +56,20 @@ public class DetailContactActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.DetailContactMenu);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(name);
+
+        String showName = name;
+        String showBio = '"'+bio+'"';
+
+        if(name.contentEquals("null")){
+            showName = username;
+        }
+
+        if(bio.contentEquals("null")){
+            showBio = "";
+        }
+
+
+        getSupportActionBar().setTitle(showName);
 
         ImageView imageView = findViewById(R.id.image_view_detail);
         TextView textViewUsername = findViewById(R.id.text_view_username_detail);
@@ -65,8 +78,8 @@ public class DetailContactActivity extends AppCompatActivity {
 
         Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
         textViewUsername.setText(username);
-        textViewName.setText("Name: " + name);
-        textViewBio.setText('"'+bio+'"');
+        textViewName.setText("Name: " + showName);
+        textViewBio.setText(showBio);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

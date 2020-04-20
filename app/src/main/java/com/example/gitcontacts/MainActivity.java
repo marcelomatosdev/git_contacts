@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -19,6 +21,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.OAuthProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,14 +52,43 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
     private ArrayList<ContactItem> mContactList;
     private RequestQueue mRequestQueue;
 
+    private String current_name;
+    private String current_username;
+    private SharedPreferences sharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent login = getIntent();
+        current_name = login.getStringExtra("name");
+        current_username = login.getStringExtra("username");
+        sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+
+
+        if (current_username != null){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", current_name);
+            editor.putString("username", current_username);
+            editor.commit();
+        }else
+        {
+            current_name = sharedPreferences.getString("name", "");
+            current_username = sharedPreferences.getString("username","Missing Username");
+        }
+
+
         toolbar = findViewById(R.id.MainMenu);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Git Contacts");
+
+        String showWelcome = current_name;
+        if(current_name==null){
+            showWelcome = current_username;
+        }
+        getSupportActionBar().setTitle("Welcome " + showWelcome);
+
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);

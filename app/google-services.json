@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "79750923052",
-    "firebase_url": "https://redriverbay-b2947.firebaseio.com",
-    "project_id": "redriverbay-b2947",
-    "storage_bucket": "redriverbay-b2947.appspot.com"
+    "project_number": "106699198440",
+    "firebase_url": "https://gitcontacts-2020.firebaseio.com",
+    "project_id": "gitcontacts-2020",
+    "storage_bucket": "gitcontacts-2020.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:79750923052:android:a9004f07c9eb2329b4e289",
+        "mobilesdk_app_id": "1:106699198440:android:adb640e708bf5e6d1ede5d",
         "android_client_info": {
-          "package_name": "com.example.redriverbay_android"
+          "package_name": "com.example.gitcontacts"
         }
       },
       "oauth_client": [
         {
-          "client_id": "79750923052-lgcc8ildikb9910pffjr93umefflieih.apps.googleusercontent.com",
+          "client_id": "106699198440-t1v7a0rpjeia1j8i7i5d8545qfriflmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gitcontacts",
+            "certificate_hash": "279ba08aec341b2eca2ad0e453733841bff98860"
+          }
+        },
+        {
+          "client_id": "106699198440-bviumdupvjqp3rruq6fe5o77un7olqa7.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBbKeENBpndjzzwDX2h4Yzwg407jvN29Q"
+          "current_key": "AIzaSyCJAsLJd2X6EnUOguN3GYHY7VsD7izmO8k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "79750923052-lgcc8ildikb9910pffjr93umefflieih.apps.googleusercontent.com",
+              "client_id": "106699198440-bviumdupvjqp3rruq6fe5o77un7olqa7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
