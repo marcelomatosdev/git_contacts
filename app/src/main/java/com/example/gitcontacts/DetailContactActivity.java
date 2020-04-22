@@ -1,11 +1,16 @@
 package com.example.gitcontacts;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,11 +43,14 @@ public class DetailContactActivity extends AppCompatActivity {
     public int id;
     public int gitId;
     private RequestQueue mRequestQueue;
-
+    private ImageButton btnGithubPage;
+    private SharedPreferences sharedP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        sharedP = getSharedPreferences("sharedP", Context.MODE_PRIVATE);
+
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(EXTRA_IMAGE_URL);
@@ -53,6 +61,10 @@ public class DetailContactActivity extends AppCompatActivity {
         int followers = intent.getIntExtra(EXTRA_FOLLOWERS, 0);
         gitId = intent.getIntExtra(EXTRA_GIT_ID, 0);
         id = intent.getIntExtra(EXTRA_ID, 0);
+        btnGithubPage = findViewById(R.id.btnGithubPage);
+        EventHandler eventHandler = new EventHandler();
+        btnGithubPage.setOnClickListener(eventHandler);
+
 
         toolbar = findViewById(R.id.DetailContactMenu);
         setSupportActionBar(toolbar);
@@ -80,7 +92,33 @@ public class DetailContactActivity extends AppCompatActivity {
         textViewUsername.setText(username);
         textViewName.setText("Name: " + showName);
         textViewBio.setText(showBio);
+
+        SharedPreferences.Editor editor = sharedP.edit();
+        editor.putString("usernamepage", username);
+        editor.commit();
     }
+
+
+    class EventHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.btnGithubPage:
+
+
+                    Intent intentGithubPage = new Intent(DetailContactActivity.this, GithubPageActivity.class);
+                    intentGithubPage.putExtra("username", EXTRA_USERNAME);
+                    startActivity(intentGithubPage);
+                    break;
+                    }
+
+
+            }
+    }
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

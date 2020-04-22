@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.OAuthProvider;
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
         current_username = login.getStringExtra("username");
         sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
 
+        Log.d("Marcelo", "onCreate1: "+current_username);
+        Log.d("Marcelo", "onCreate1: "+current_name);
 
         if (current_username != null){
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -87,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
         if(current_name==null){
             showWelcome = current_username;
         }
-        getSupportActionBar().setTitle("Welcome " + showWelcome);
+        Log.d("Marcelo", "onCreate2: "+showWelcome);
+        getSupportActionBar().setTitle("Welcome " + current_username);
 
         mRequestQueue = Volley.newRequestQueue(this);
         parseJSON();
@@ -115,6 +120,16 @@ public class MainActivity extends AppCompatActivity implements ContactCardAdapte
             case R.id.addContact_menuItem:
                 Intent intentRefresh = new Intent(MainActivity.this, AddContactActivity.class);
                 startActivity(intentRefresh);
+                return true;
+            case R.id.signOut_menuItem:
+                sharedPreferences.edit().clear().commit();
+                CookieManager cm = CookieManager.getInstance();
+                cm.flush();
+                FirebaseAuth.getInstance().signOut();
+
+                Intent intentSignOut = new Intent(MainActivity.this, GitLoginActivity.class);
+                startActivity(intentSignOut);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

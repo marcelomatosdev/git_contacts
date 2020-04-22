@@ -3,7 +3,9 @@ package com.example.gitcontacts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.MessageQueue;
 import android.util.Log;
@@ -38,6 +40,8 @@ public class AddContactActivity extends AppCompatActivity {
     private Button btnAddNewContact;
     private String username;
     private RequestQueue mRequestQueue;
+   // private SharedPreferences sharedPreferences;
+   // private String current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,9 @@ public class AddContactActivity extends AppCompatActivity {
 
         btnSearch.setOnClickListener(eventHandler);
         btnAddNewContact.setOnClickListener(eventHandler);
+//
+//        sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+//        current_user = sharedPreferences.getString("username","Missing Username");
 
     }
 
@@ -97,6 +104,7 @@ public class AddContactActivity extends AppCompatActivity {
         JSONObject object = new JSONObject();
         try {
             object.put("username",username);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -64,7 +64,7 @@ public class GitLoginActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.btnLogin:
                     login();
-                    break;
+                    //break;
             }
         }
     }
@@ -154,6 +154,7 @@ public class GitLoginActivity extends AppCompatActivity {
                 Log.d("Marcelo", "suc");
                 Intent intentMain = new Intent(GitLoginActivity.this, MainActivity.class);
                startActivity(intentMain);
+
 
             }
         }, new Response.ErrorListener() {

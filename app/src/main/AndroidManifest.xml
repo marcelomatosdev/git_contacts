@@ -23,6 +23,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".GithubPageActivity"/>
         <activity android:name=".AddContactActivity" />
         <activity android:name=".DetailContactActivity" />
         <activity android:name=".MainActivity"/>
