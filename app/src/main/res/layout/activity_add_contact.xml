@@ -50,7 +50,6 @@
             android:layout_height="match_parent" />
 
 
-        />
 
 
     </LinearLayout>
@@ -62,4 +61,9 @@
         android:text="Add to contact list"
         android:visibility="invisible"
         />
+
+
+
+    />
+
 </LinearLayout>

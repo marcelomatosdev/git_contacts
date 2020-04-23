@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.events.EventHandler;
 
 import org.json.JSONArray;
@@ -42,15 +43,18 @@ public class AddContactActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
    // private SharedPreferences sharedPreferences;
    // private String current_user;
+   //private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
+
         username = "";
         wbAddContact = findViewById(R.id.wbAddContact);
         wbAddContact.setWebViewClient(new WebViewClient());
+       // floatingActionButton = findViewById(R.id.fab);
 
         btnSearch = findViewById(R.id.btnSearch);
         etSearch = findViewById(R.id.etSearch);

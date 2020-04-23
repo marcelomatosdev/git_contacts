@@ -9,4 +9,58 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+
+
+    <string-array name="font_size_array">
+        <item>Select the font size</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>24</item>
+        <item>30</item>
+    </string-array>
+
+
+    <string-array name="font_color_array">
+        <item>Select the font color</item>
+        <item >BLACK</item>
+        <item >RED</item>
+        <item >GREEN</item>
+        <item >BLUE</item>
+        <item >YELLOW</item>
+    </string-array>
+
+    <string-array name="font_style_array">
+        <item>Select the font style</item>
+        <item>Normal</item>
+        <item>Bold</item>
+        <item>Italic</item>
+    </string-array>
+
+    <string-array name="background_color_array">
+        <item>Select the background color</item>
+        <item >WHITE</item>
+        <item >RED</item>
+        <item >GREEN</item>
+        <item >BLUE</item>
+        <item >YELLOW</item>
+    </string-array>
+
+
+
+
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_header">Font Settings</string>
+
+    <!-- Messages Preferences -->
+    <string name="font_size">Font Size:</string>
+    <string name="font_color">Font Color</string>
+    <string name="font_weight">Bold?</string>
+    <string name="background_color">Background Color</string>
+
 </resources>

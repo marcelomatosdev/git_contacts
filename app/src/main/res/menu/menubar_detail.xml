@@ -8,6 +8,13 @@
         android:title="delete"
         android:visible="true"
         app:showAsAction="always">
-
+    </item>
+    <item
+        android:id="@+id/settings"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="settings"
+        android:visible="true"
+        app:showAsAction="always">
     </item>
 </menu>

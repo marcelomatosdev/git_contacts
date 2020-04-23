@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".SettingsActivity"></activity>
         <activity
             android:name=".GitLoginActivity"
             android:label="@string/title_activity_login">
@@ -21,12 +22,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".GithubPageActivity"/>
+        <activity android:name=".GithubPageActivity" />
         <activity android:name=".AddContactActivity" />
         <activity android:name=".DetailContactActivity" />
-        <activity android:name=".MainActivity"/>
+
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

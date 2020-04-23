@@ -3,6 +3,7 @@ package com.example.gitcontacts;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
@@ -45,11 +47,18 @@ public class DetailContactActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
     private ImageButton btnGithubPage;
     private SharedPreferences sharedP;
+    private SharedPreferences sharedPreferences;
+
+    private ImageView imageView;
+    private TextView textViewUsername;
+    private TextView textViewName;
+    private TextView textViewBio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
         sharedP = getSharedPreferences("sharedP", Context.MODE_PRIVATE);
+
 
 
         Intent intent = getIntent();
@@ -83,10 +92,10 @@ public class DetailContactActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(showName);
 
-        ImageView imageView = findViewById(R.id.image_view_detail);
-        TextView textViewUsername = findViewById(R.id.text_view_username_detail);
-        TextView textViewName = findViewById(R.id.text_view_name_detail);
-        TextView textViewBio = findViewById(R.id.text_view_bio_detail);
+        imageView = findViewById(R.id.image_view_detail);
+        textViewUsername = findViewById(R.id.text_view_username_detail);
+        textViewName = findViewById(R.id.text_view_name_detail);
+        textViewBio = findViewById(R.id.text_view_bio_detail);
 
         Picasso.with(this).load(imageUrl).fit().centerInside().into(imageView);
         textViewUsername.setText(username);
@@ -96,6 +105,9 @@ public class DetailContactActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedP.edit();
         editor.putString("usernamepage", username);
         editor.commit();
+
+
+        settings();
     }
 
 
@@ -104,8 +116,8 @@ public class DetailContactActivity extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btnGithubPage:
-
-
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    Log.d("Marcelo", "onClick: "+AppCompatDelegate.getDefaultNightMode());
                     Intent intentGithubPage = new Intent(DetailContactActivity.this, GithubPageActivity.class);
                     intentGithubPage.putExtra("username", EXTRA_USERNAME);
                     startActivity(intentGithubPage);
@@ -132,6 +144,10 @@ public class DetailContactActivity extends AppCompatActivity {
             case R.id.delete:
                 Log.d("Marcelo", "onOptionsItemSelected: "+gitId);
                 removeContact(gitId);
+                return true;
+            case R.id.settings:
+                Intent intentMain = new Intent(DetailContactActivity.this, SettingsActivity.class);
+                startActivity(intentMain);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -163,7 +179,40 @@ public class DetailContactActivity extends AppCompatActivity {
         mRequestQueue.add(request);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
 
+        settings();
+
+    }
+
+    public void settings(){
+        //Use for settings
+        sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+        String fontSize = sharedPreferences.getString("fontSize","20");
+        String fontColor = sharedPreferences.getString("fontColor","BLACK");
+        String backgroundColor = sharedPreferences.getString("backgroundColor","#FAFAFA");
+        int fontStyle = sharedPreferences.getInt("fontStyle",2000213);
+
+        textViewUsername.setTextSize(Integer.parseInt((fontSize)));
+        textViewUsername.setTextColor(Color.parseColor(fontColor));
+        textViewUsername.setBackgroundColor(Color.parseColor(backgroundColor));
+        textViewUsername.setTextAppearance(getApplicationContext(), fontStyle);
+
+        textViewName.setTextSize(Integer.parseInt((fontSize)));
+        textViewName.setTextColor(Color.parseColor(fontColor));
+        textViewName.setBackgroundColor(Color.parseColor(backgroundColor));
+        textViewName.setTextAppearance(getApplicationContext(), fontStyle);
+
+        textViewBio.setTextSize(Integer.parseInt((fontSize)));
+        textViewBio.setTextColor(Color.parseColor(fontColor));
+        textViewBio.setBackgroundColor(Color.parseColor(backgroundColor));
+        //textViewBio.setTextAppearance(getApplicationContext(), fontStyle);
+
+
+        //--
+    }
 
 
 

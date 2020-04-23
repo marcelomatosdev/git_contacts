@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:forceDarkAllowed="true"
     tools:context=".MainActivity">
+
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/MainMenu"
@@ -14,6 +17,7 @@
         android:elevation="4dp"
 
         />
+
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_view"
     android:layout_width="match_parent"
@@ -21,8 +25,9 @@
     android:background="@android:color/darker_gray"
     android:layout_marginTop="60dp">
 
-</androidx.recyclerview.widget.RecyclerView>
 
+
+</androidx.recyclerview.widget.RecyclerView>
 
 
 
@@ -30,3 +35,5 @@
     
     
 </RelativeLayout>
+
+
